@@ -8,8 +8,8 @@ Se han escogido los módulos indicados por Natalie DeanMade en su guía *Moodle 
 **Moodle for Motivating Learners:**
 https://www.moodlefacts.nl/wp-content/uploads/2013/06/Moodle_For_Motivation_Guide.pdf
 
-Tipo del modulo | Achiever | Explorer| Socializer | Killer
------------- | -------------
+Tipo del modulo | Achiever | Explorer | Socializer | Killer
+--------------- | -------- | -------- | ---------- | ------
 Tarea | 1 | 0 | 0 | 0
 Chat | 0 | 0 | 1 | 0
 Elección | 0 | 1 | 1 | 0
@@ -25,7 +25,7 @@ Workshop | 0 | 0 | 1 | 1
 Sólo nos interesan los tipos de actividades y recursos que ofrezcan un uso continuado y un beneficio a lo largo del tiempo. Estos son los módulos de la plataforma que usa el usuario por voluntad propia para su proceso de aprendizaje y detectan mejor sus preferencias
 
 Tipo del modulo | Visual | Auditivo | Lector | Kinestésico
------------- | -------------
+--------------- | ------ | -------- | ------ | -----------
 Libro | 0 | 0 | 1 | 0
 Chat | 0 | 1 | 0 | 0
 Base de datos | 0 | 1 | 1 | 0
