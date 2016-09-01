@@ -163,7 +163,6 @@ function recblock_evaluate ($var1, $operator, $var2){
 
 //////////VECTORS
 /**
- * Returns a boolean value indicating if the vector contains only positive numbes 
  *
  * @param  array $vector vector;
  * @return bool true if the vector contains only positives
