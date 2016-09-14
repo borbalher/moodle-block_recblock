@@ -66,3 +66,4 @@ $string['desc_bartle'] = 'Estilo de juego propuesto por Richard Bartle';
 $string['label_item_mode'] = 'Escoger el modo de creación de los items';
 $string['desc_item_mode'] = 'Se escogerá entre un modo estricto (solo elementos etiquetados) o un modo combinado con valores por defecto ';
 $string['personal_recommendations'] = 'Tus recomendaciones personales';
+$string['newuser'] =  'Parece que eres nuevo por aquí...¿Por qué no pruebas cualquier actividad? ';

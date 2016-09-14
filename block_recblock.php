@@ -45,66 +45,70 @@ class block_recblock extends block_base {
     global $COURSE, $CFG, $USER;
 
     if ($this->content !== null) {
-      return $this->content;
+    return $this->content;
     }
 
     $content = "";
-    
+
     $roles = get_user_roles(context_course::instance($COURSE->id),  $USER->id, false);
     $role = $roles[key($roles)]->roleid; //Añadimos el parametro roleid que nos indica el rol del usuario dentro del curso
 
     if($role==5 ||$role==6){
-		
-	    $varkdataitems = new vark_items_moodle();
-		$bartledataitems = new bartle_items_moodle();
-	    $vark_items = new recommender_items($varkdataitems);
-		$bartle_items = new recommender_items($bartledataitems);
-		
-		$varkdataprofile = new like_moodle_profile($vark_items,0,-1);		
-	    $varkusermodel = new usage_user_model($varkdataprofile);
-		
-		$bartledataprofile = new like_moodle_profile($bartle_items,0,-1);		
-	    $bartleusermodel = new usage_user_model($bartledataprofile);
-		
-	    $rectype = get_config('block_recblock','recommender_type');
-	    $mode = get_config('block_recblock','recommendation_mode');
-		
-	    $rec = NULL;
-	    switch($rectype){
-	    	case "t":
-	    		$rec = new tf_idf_recommender();			
-	    		break;
-	    	case "w":
-	    		$rec = new simple_weight_recommender();
-	    		break;	    	
-	    	case "i":
-	    		$rec = new item_based_recommender();
-	    		$rec->set_threshold(0.6);
-	    		$rec->set_threshold_operator(">=");
-	    		$rec->set_similarity_function('block_recblock_cosine_similarity');
-	    		break;
-	    		
-	    }
-		
-	    $rec->set_mode($mode);
-	
-		$rec->set_recommender_items($vark_items);
-		$rec->set_recommender_user_model($varkusermodel);
-		$rec->execute();
-	
-		$varkrecommendation = $rec->recommend();
 
-		$rec->set_recommender_items($bartle_items);
-		$rec->set_recommender_user_model($bartleusermodel);
-		$rec->execute();
-		$bartlerecommendation = $rec->recommend();
-		
-	    $content = "<h5>".get_string('personal_recommendations', 'block_recblock')."</h5>";
-		$content.= "<a href=\"".$CFG->dirroot."/".$bartlerecommendation->get_url()->out_as_local_url()."\">".$bartlerecommendation->get_name()."</a>";
-		$content.= "</br>";
-		$content.= "<a href=\"".$CFG->dirroot."/".$varkrecommendation->get_url()->out_as_local_url()."\">".$varkrecommendation->get_name()."</a>";
-	
-   }
+      $varkdataitems = new vark_items_moodle();
+      $bartledataitems = new bartle_items_moodle();
+      $vark_items = new recommender_items($varkdataitems);
+      $bartle_items = new recommender_items($bartledataitems);
+
+      $varkdataprofile = new like_moodle_profile($vark_items,0,-1);
+      $varkusermodel = new usage_user_model($varkdataprofile);
+
+      $bartledataprofile = new like_moodle_profile($bartle_items,0,-1);
+      $bartleusermodel = new usage_user_model($bartledataprofile);
+
+      $rectype = get_config('block_recblock','recommender_type');
+      $mode = get_config('block_recblock','recommendation_mode');
+
+      $rec = NULL;
+      switch($rectype){
+        case "t":
+          $rec = new tf_idf_recommender();
+          break;
+        case "w":
+          $rec = new simple_weight_recommender();
+          break;
+        case "i":
+          $rec = new item_based_recommender();
+          $rec->set_threshold(0.6);
+          $rec->set_threshold_operator(">=");
+          $rec->set_similarity_function('block_recblock_cosine_similarity');
+          break;
+      }
+
+      $rec->set_mode($mode);
+
+      $rec->set_recommender_items($vark_items);
+      $rec->set_recommender_user_model($varkusermodel);
+      $rec->execute();
+      $varkrecommendation = $rec->recommend();
+
+      $rec->set_recommender_items($bartle_items);
+      $rec->set_recommender_user_model($bartleusermodel);
+      $rec->execute();
+      $bartlerecommendation = $rec->recommend();
+
+      $content = "<h5>".get_string('personal_recommendations', 'block_recblock')."</h5></br>";
+      if($bartlerecommendation == NULL && $varkrecommendation == NULL){
+        $content.= get_string('newuser','block_recblock');
+      }else{
+        if($bartlerecommendation != NULL){
+          $content.= "<a href=\"".$CFG->dirroot."/".$bartlerecommendation->get_url()->out_as_local_url()."\">".$bartlerecommendation->get_name()."</a></br>";
+        }
+        if($varkrecommendation != NULL){
+          $content.= "<a href=\"".$CFG->dirroot."/".$varkrecommendation->get_url()->out_as_local_url()."\">".$varkrecommendation->get_name()."</a>";
+        }
+      }
+    }
 
     $this->content         =  new stdClass;
     $this->content->text   .= $content;
@@ -112,7 +116,7 @@ class block_recblock extends block_base {
 
     return $this->content;
   }
-
+  
   public function applicable_formats() {
     return array('all' => false,
                  'site' => false,
