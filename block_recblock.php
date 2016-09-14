@@ -102,10 +102,10 @@ class block_recblock extends block_base {
         $content.= get_string('newuser','block_recblock');
       }else{
         if($bartlerecommendation != NULL){
-          $content.= "<a href=\"".$CFG->dirroot."/".$bartlerecommendation->get_url()->out_as_local_url()."\">".$bartlerecommendation->get_name()."</a></br>";
+          $content.= "<a href=\"".$CFG->dirroot."/".$bartlerecommendation->get_url()->out_as_local_url()."\">EJ:".$bartlerecommendation->get_name()."</a></br>";
         }
         if($varkrecommendation != NULL){
-          $content.= "<a href=\"".$CFG->dirroot."/".$varkrecommendation->get_url()->out_as_local_url()."\">".$varkrecommendation->get_name()."</a>";
+          $content.= "<a href=\"".$CFG->dirroot."/".$varkrecommendation->get_url()->out_as_local_url()."\">EA:".$varkrecommendation->get_name()."</a>";
         }
       }
     }
@@ -116,7 +116,7 @@ class block_recblock extends block_base {
 
     return $this->content;
   }
-  
+
   public function applicable_formats() {
     return array('all' => false,
                  'site' => false,
